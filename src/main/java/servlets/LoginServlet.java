@@ -5,7 +5,6 @@ import java.io.IOException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
-
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -79,7 +78,7 @@ public class LoginServlet extends HttpServlet {
         	request.getRequestDispatcher("/info.jsp").forward(request, response);
         	// Debug
         	
-        	//response.sendRedirect(url.toString());
+        	response.sendRedirect(url.toString());
         }
 	}
 
