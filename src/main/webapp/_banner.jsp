@@ -73,13 +73,13 @@
                                     <a class="nav-link" href="#about"> <font color="blue"> About </font></a>
                                  </li>
                                  <li class="nav-item">
-                                    <a class="nav-link" href="productlist"> <font color="blue"> Our Products</font></a>
+                                    <a class="nav-link" href="/onlineshop/productlist"> <font color="blue"> Our Products</font></a>
                                  </li>
                               </ul>
                               <% if (session.getAttribute("code") != "loggedin") { %>
 							  	<div class="sign_btn"><a href="/onlineshop/login?code=login">Sign In</a></div>
 							  <% } else { %>
-							  	<div class="sign_btn"><a href="/onlineshop/welcome"><%= session.getAttribute("UserAccount") %></a></div>
+							  	<div class="sign_btn"><a href="/onlineshop/welcome"><%= session.getAttribute("name") %></a></div>
 							  <% } %>
                            </div>
                         </nav>
