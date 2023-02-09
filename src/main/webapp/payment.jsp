@@ -18,7 +18,7 @@ pageEncoding="UTF-8"%>
 		  vertical-align: middle;
 		}
 	</style>
-	<jsp:include page="_banner.jsp"></jsp:include>
+	<jsp:include page="_banner.jsp"/>
      
    <%@ page import="java.util.*" %>
    <%@ page import="java.sql.*" %>
@@ -49,13 +49,10 @@ pageEncoding="UTF-8"%>
                   
                   <!-- GENERATE PRICE TABLE  -->
                   	
-                  
-                  <!-- TODO: Remove session.setAttribute() when everything is in place-->
                   <% 
-                 	session.setAttribute("Cart", new ArrayList<Integer>(Arrays.asList(1, 2, 3)));
-
           			float totalPrice=0;
-          			if (session.getAttribute("Cart") == null){ %>
+          			ArrayList<Integer> cart = (ArrayList<Integer>)session.getAttribute("Cart");
+          			if (cart == null || cart.size() == 0){ %>
           			
           				<p>There's nothing in your cart. Go buy something!</p>
           			
@@ -64,16 +61,13 @@ pageEncoding="UTF-8"%>
           			<table> <tr> <td></td>	<td></td>	<td>Quantity</td>	<td></td>	<td>Price</td></tr>
           			
           			<%
-          			{
-                      	ArrayList<Integer> productID = (ArrayList<Integer>) session.getAttribute("Cart");
-                      	int minh = 1;
-                      	
+          			{                      	
                 		String imgLink = "", imgName = "", price = "";
                 	
            				PreparedStatement s = SQLite.get("onlineshop.db").prepareStatement("Select image, product_name, price from product where product_id == ?;");
-               			for (int iii=0; iii<productID.size(); ++iii)
+               			for (int iii=0; iii<cart.size(); ++iii)
                			{
-               				s.setString(1, productID.get(iii).toString());
+               				s.setString(1, cart.get(iii).toString());
                				
                				ResultSet r = s.executeQuery();
                				imgLink = r.getString("Image");
@@ -101,7 +95,7 @@ pageEncoding="UTF-8"%>
           			}
           		%>
                   <tr> <td></td>	<td></td>	<td>Total:</td>	<td></td>	<td><input id='Total' type=number value='<%=totalPrice%>' size='10' readonly='readonly'></td></tr>
-                  <tr> <td></td>	<td></td>	<td></td>	<td></td>	<td><button type='button'><a href='/onlineshop/form'>Checkout</a></button></td></tr>
+                  <tr> <td></td>	<td></td>	<td></td>	<td></td>	<td><button onclick="location.href='/onlineshop/form'">Checkout</button></td></tr>
 				</table>
                   
             	</div>
@@ -109,49 +103,6 @@ pageEncoding="UTF-8"%>
       	</div>
       </div>
       
-      <!--  footer -->
-      <footer>
-         <div class="footer">
-            <div class="container">
-               <div class="row">
-                  <div class="col-md-6">
-                     <div class="cont">
-                        <h3> <strong class="multi"> Free Multipurpose</strong><br>
-                           Responsive Landing Page 2019
-                        </h3>
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <div class="cont_call">
-                        <h3> <strong class="multi"> Call Now</strong><br>
-                           (+1) 12345667890
-                        </h3>
-                     </div>
-                  </div>
-               </div>
-            </div>
-            <div class="copyright">
-               <div class="container">
-                  <div class="row">
-                     <div class="col-md-12">
-                        <p>Â© 2019 All Rights Reserved. Design by <a href="https://html.design/"> Free Html Templates</a></p>
-                     </div>
-                  </div>
-               </div>
-            </div>
-         </div>
-      </footer>
-      <!-- end footer -->
-      <!-- Javascript files-->
-      <script src="js/jquery.min.js"></script>
-      <script src="js/popper.min.js"></script>
-      <script src="js/bootstrap.bundle.min.js"></script>
-      <script src="js/jquery-3.0.0.min.js"></script>
-      <script src="js/plugin.js"></script>
-      <!-- sidebar -->
-      <script src="js/jquery.mCustomScrollbar.concat.min.js"></script>
-      <script src="js/custom.js"></script>
-      <script src="https:cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.js"></script>
-   </body>
+     <jsp:include page="_footer.jsp"/>
    
 </html>

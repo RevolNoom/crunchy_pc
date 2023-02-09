@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
+
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -38,7 +39,7 @@ public class LoginServlet extends HttpServlet {
         System.out.println(param);
 
         StringBuilder url = new StringBuilder();
-        if (param.equals("login")) {
+        if (param == null || param.equals("login")) {
         	// Debug
         	System.out.println("Log In");
         	
@@ -71,14 +72,16 @@ public class LoginServlet extends HttpServlet {
         			.execute().returnContent().asString()
         			, GoogleInfo.class);
         	
-        	request.setAttribute("id", userInfo.getId());
-        	request.setAttribute("name", userInfo.getName());
-        	request.setAttribute("email", userInfo.getEmail());
+        	request.getSession().setAttribute("id", userInfo.getId());
+        	request.getSession().setAttribute("name", userInfo.getName());
+        	request.getSession().setAttribute("email", userInfo.getEmail());
+        	request.getSession().setAttribute("code", "loggedin");
         	
-        	request.getRequestDispatcher("/info.jsp").forward(request, response);
+        	//request.getRequestDispatcher("/info.jsp").forward(request, response);
+        	request.getRequestDispatcher("/index.jsp").forward(request, response);
         	// Debug
         	
-        	response.sendRedirect(url.toString());
+        	//response.sendRedirect(url.toString());
         }
 	}
 
